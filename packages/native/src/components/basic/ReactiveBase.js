@@ -13,6 +13,8 @@ import theme from '../../theme';
 /* use a custom store key so reactivesearch does not interfere
    with a different redux store in a nested context */
 const Provider = createProvider(storeKey);
+// as known issue #2, we need to provide the context for react-redux >= 6.0.0
+const RContext = React.createContext(null);
 
 // for network debugging while development
 // GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
@@ -41,7 +43,7 @@ class ReactiveBase extends Component {
 	render() {
 		return (
 			<ThemeProvider theming={{ ...theme, ...this.props.theme }}>
-				<Provider store={this.store}>
+				<Provider store={this.store} context={RContext}>
 					<Container>{this.props.children}</Container>
 				</Provider>
 			</ThemeProvider>
